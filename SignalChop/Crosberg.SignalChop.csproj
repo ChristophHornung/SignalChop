@@ -8,6 +8,8 @@
 		<Nullable>enable</Nullable>
 		<AssemblyName>SignalChop</AssemblyName>
 		<PublishTrimmed>true</PublishTrimmed>
+		<PublishReadyToRun>true</PublishReadyToRun>
+		<PublishSingleFile>true</PublishSingleFile>
 	</PropertyGroup>
 
 	<ItemGroup>
