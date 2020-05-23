@@ -17,16 +17,16 @@ namespace Crosberg.SignalChop
 		private bool exit;
 		private int waitCount;
 		private bool quiteMode;
-		private Dictionary<string, IDisposable> listeningEntries = new Dictionary<string, IDisposable>();
+		private readonly Dictionary<string, IDisposable> listeningEntries = new Dictionary<string, IDisposable>();
 
 		/// <summary>
 		/// A simple generic signalR sender/receiver.
 		/// </summary>
-		/// <param name="commandFile">An optional command file that will be executed.</param>
+		/// <param name="commandFile">An optional command file that will be executed line by line.</param>
 		/// <param name="quite">Whether to output status information or restrict the output to received json only.</param>
 		/// <param name="exitAfterCount">An integer to indicate how many messages to retrieve before quitting. 0 indicates that no auto-exit will occur.</param>
 		/// <returns>The status code.</returns>
-		private static async Task<int> Main(string commandFile = null, bool quite = false, int exitAfterCount = 0)
+		private static async Task<int> Main(string? commandFile = null, bool quite = false, int exitAfterCount = 0)
 		{
 			return await new Program().Run(commandFile, quite, exitAfterCount);
 		}
@@ -54,11 +54,11 @@ namespace Crosberg.SignalChop
 			return new string(parmChars).Split('\n');
 		}
 
-		private async Task<int> Run(string commandFile, bool quiteMode, int exitAfterCount)
+		private async Task<int> Run(string? commandFile, bool quite, int exitAfterCount)
 		{
 			this.waitCount = exitAfterCount;
-			this.quiteMode = quiteMode;
-			if (!quiteMode)
+			this.quiteMode = quite;
+			if (!quite)
 			{
 				this.ShowGeneralHelp();
 			}
@@ -180,7 +180,6 @@ namespace Crosberg.SignalChop
 						"\tUse '-marks to denote strings or json. Json parameters have to start with a curly bracket ({).");
 					Console.WriteLine(
 						"Example: Send Order 'Nike' 10 {\"ProductName\":\"Shoe\", \"Id\":2, \"Comment\":\"Pink laces\"}'");
-					break;
 					break;
 				case "Help":
 					Console.WriteLine("Usage: Help <method>");
