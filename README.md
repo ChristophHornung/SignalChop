@@ -48,3 +48,11 @@ Sends a SignalR invocation message for <method> to the server."
 Use '-marks to denote strings or json. Json parameters have to start with a curly bracket ({).
 
 Example: Send Order 'Nike' 10 '{\"ProductName\":\"Shoe\", \"Id\":2, \"Comment\":\"Pink laces\"}'
+
+### Quit
+Usage: Quit [waitCount]
+
+Quits all execution and disconnects from the server.
+The optional [waitCount] indicates to not quit immediately but instead wait for [waitCount] invocations from the server first and then quit.
+
+Example: Quit 2
