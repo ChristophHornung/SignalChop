@@ -20,7 +20,7 @@ Options:
 Usage: Connect <server>
 
 Connects to the given signalR server.
-Example: Connect https://localhost:50001/chatHub"
+Example: Connect https://localhost:50001/chatHub
   
 ### Listen
 Usage: Listen <method> [parameter1] [parameter2]...
