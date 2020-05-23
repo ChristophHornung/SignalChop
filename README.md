@@ -6,38 +6,45 @@ Usage:
   SignalChop [options]
 
 Options:
-  --command-file <command-file>            An optional command file that will be executed line by line.
-  --quite                                  Whether to output status information or restrict the output to received json only.
-  --exit-after-count <exit-after-count>    An integer to indicate how many messages to retrieve before quitting. 0 indicates that no auto-exit will occur.
-  --version                                Show version information
-  -?, -h, --help                           Show help and usage information
+ | Option | Description |
+ | --- | --- |
+ | --command-file <command-file>           | An optional command file that will be executed line by line. |
+ | --quite                                 | Whether to output status information or restrict the output to received json only. |
+ | --exit-after-count <exit-after-count>   | An integer to indicate how many messages to retrieve before quitting. 0 indicates that no auto-exit will occur. |
+ | --version                               | Show version information |
+ | -?, -h, --help                          | Show help and usage information |
   
 ## Commands:
   
 ### Connect
   Usage: Connect <server>
-	Connects to the given signalR server.
-	Example: Connect https://localhost:50001/chatHub"
+
+Connects to the given signalR server.
+Example: Connect https://localhost:50001/chatHub"
   
 ### Listen
-  Usage: Listen <method> [parameter1] [parameter2]...
-	
-	Listens for SignalR invocations for the given <method>. Received messages will be output on the console in JSON format.
-	[parameterX] will be used to name the given parameter in the json output. The number of parameters has to match the <method>s definition on the server.
-  Example: Listen broadcastMessage username chatmessage"
+Usage: Listen <method> [parameter1] [parameter2]...
+
+Listens for SignalR invocations for the given <method>. Received messages will be output on the console in JSON format.
+
+[parameterX] will be used to name the given parameter in the json output. The number of parameters has to match the <method>s definition on the server.
+
+Example: Listen broadcastMessage username chatmessage"
   
 ### StopListen
-  Usage: StopListen <method>
-	
-	Stops listening for SingalR invocation messages for <method>.
-	Example: StopListen broadcastMessage"
+Usage: StopListen <method>
+
+Stops listening for SingalR invocation messages for <method>.
+
+Example: StopListen broadcastMessage"
 
 ### Send
- Usage: Send <method> [parameter1] [parameter2] ..."
- 
- Sends a SignalR invocation message for <method> to the server."
-    [parameterX] defines the parameters of the invocation. The number of parameters has to match the <method>s definition on the server.
-		Use '-marks to denote strings or json. Json parameters have to start with a curly bracket ({)."
-    "Example: Send Order 'Nike' 10 {\"ProductName\":\"Shoe\", \"Id\":2, \"Comment\":\"Pink laces\"}'"
-    
-    
+Usage: Send <method> [parameter1] [parameter2] ..."
+
+Sends a SignalR invocation message for <method> to the server."
+
+[parameterX] defines the parameters of the invocation. The number of parameters has to match the <method>s definition on the server.
+
+Use '-marks to denote strings or json. Json parameters have to start with a curly bracket ({).
+
+Example: Send Order 'Nike' 10 '{\"ProductName\":\"Shoe\", \"Id\":2, \"Comment\":\"Pink laces\"}'
