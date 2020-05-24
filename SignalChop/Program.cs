@@ -160,7 +160,7 @@ namespace Crosberg.SignalChop
 			{
 				case "StopListen":
 					Console.WriteLine("Usage: StopListen <method>");
-					Console.WriteLine("Description: Stops listening for SingalR invocation messages for <method>.");
+					Console.WriteLine("Description: Stops listening for SignalR invocation messages for <method>.");
 					Console.WriteLine("Example: StopListen broadcastMessage");
 					break;
 				case "Listen":
@@ -169,7 +169,7 @@ namespace Crosberg.SignalChop
 						"Description: Listens for SignalR invocations for the given <method>. Received messages will be output on the console in JSON format.");
 					Console.WriteLine(
 						"\t [parameterX] will be used to name the given parameter in the json output. The number of parameters has to match the <method>s definition on the server.");
-					Console.WriteLine("Example: Listen broadcastMessage username chatmessage");
+					Console.WriteLine("Example: Listen broadcastMessage username message");
 					break;
 				case "Connect":
 					Console.WriteLine("Usage: Connect <server>");
