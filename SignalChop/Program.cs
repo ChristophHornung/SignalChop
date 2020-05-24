@@ -18,46 +18,50 @@ namespace Crosberg.SignalChop
 		private int waitCount;
 		private bool quiteMode;
 		private readonly Dictionary<string, IDisposable> listeningEntries = new Dictionary<string, IDisposable>();
+		private bool verboseMode;
 
 		/// <summary>
 		/// A simple generic signalR sender/receiver.
 		/// </summary>
 		/// <param name="commandFile">An optional command file that will be executed line by line.</param>
 		/// <param name="quite">Whether to output status information or restrict the output to received json only.</param>
+		/// <param name="verbose">If set prints out verbose information for debugging.</param>
 		/// <param name="exitAfterCount">An integer to indicate how many messages to retrieve before quitting. 0 indicates that no auto-exit will occur.</param>
 		/// <returns>The status code.</returns>
-		private static async Task<int> Main(string? commandFile = null, bool quite = false, int exitAfterCount = 0)
+		private static async Task<int> Main(string? commandFile = null, bool quite = false, bool verbose = false,
+			int exitAfterCount = 0)
 		{
-			return await new Program().Run(commandFile, quite, exitAfterCount);
+			return await new Program().Run(commandFile, quite, verbose, exitAfterCount);
 		}
 
 		private static string[] ParseMultiSpacedArguments(string commandLine)
 		{
 			var isLastCharSpace = false;
-			char[] parmChars = commandLine.ToCharArray();
+			char[] parameterCharacters = commandLine.ToCharArray();
 			bool inQuote = false;
-			for (int index = 0; index < parmChars.Length; index++)
+			for (int index = 0; index < parameterCharacters.Length; index++)
 			{
-				if (parmChars[index] == '\'')
+				if (parameterCharacters[index] == '\'')
 				{
 					inQuote = !inQuote;
 				}
 
-				if (!inQuote && parmChars[index] == ' ' && !isLastCharSpace)
+				if (!inQuote && parameterCharacters[index] == ' ' && !isLastCharSpace)
 				{
-					parmChars[index] = '\n';
+					parameterCharacters[index] = '\n';
 				}
 
-				isLastCharSpace = parmChars[index] == '\n' || parmChars[index] == ' ';
+				isLastCharSpace = parameterCharacters[index] == '\n' || parameterCharacters[index] == ' ';
 			}
 
-			return new string(parmChars).Split('\n');
+			return new string(parameterCharacters).Split('\n');
 		}
 
-		private async Task<int> Run(string? commandFile, bool quite, int exitAfterCount)
+		private async Task<int> Run(string? commandFile, bool quite, bool verbose, int exitAfterCount)
 		{
 			this.waitCount = exitAfterCount;
 			this.quiteMode = quite;
+			this.verboseMode = verbose;
 			if (!quite)
 			{
 				this.ShowGeneralHelp();
@@ -117,6 +121,7 @@ namespace Crosberg.SignalChop
 						await Console.Error.WriteLineAsync("Missing method name for send command.");
 						return;
 					}
+
 					this.CheckConnection();
 					this.Send(splitCommand[1], splitCommand[2..]);
 					break;
@@ -142,9 +147,9 @@ namespace Crosberg.SignalChop
 
 		private void CheckConnection()
 		{
-			if (this.connection == null || this.connection.State!=HubConnectionState.Connected)
+			if (this.connection == null || this.connection.State != HubConnectionState.Connected)
 			{
-				System.Console.Error.WriteLine(
+				Console.Error.WriteLine(
 					"Not connected to server or server currently trying to reconnect. Use Connect <server> to connect.");
 			}
 		}
@@ -269,8 +274,11 @@ namespace Crosberg.SignalChop
 		{
 			var builder = new HubConnectionBuilder()
 				.WithUrl(host)
-				.ConfigureLogging(logging => { logging.AddConsole(); })
 				.WithAutomaticReconnect();
+			if (this.verboseMode)
+			{
+				builder.ConfigureLogging(logging=>logging.AddConsole());
+			}
 			this.connection = builder.Build();
 			this.connection.Closed += this.HandleClosed;
 			this.connection.Reconnected += this.HandleReconnected;
