@@ -2,7 +2,11 @@
 
 SignalChop is a simple sender/receiver for SignalR messages. It can be used to call and receive from SignalR endpoints.
 
-Usage:
+## Example
+Checkout the SignalChop.Example folder for a full send/receive example.
+
+## Usage
+
   SignalChop [options]
 
 Options:
