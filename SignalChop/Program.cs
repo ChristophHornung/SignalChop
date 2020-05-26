@@ -66,7 +66,7 @@ namespace Crosberg.SignalChop
 			this.waitCount = exitAfterCount;
 			this.quiteMode = quite;
 			this.verboseMode = verbose;
-			if (!quite)
+			if (!quite && !string.IsNullOrEmpty(commandFile))
 			{
 				this.ShowGeneralHelp();
 			}
@@ -76,6 +76,17 @@ namespace Crosberg.SignalChop
 				{
 					if (!string.IsNullOrEmpty(commandFile))
 					{
+						if (!File.Exists(commandFile))
+						{
+							await Console.Error.WriteLineAsync($"Command file {commandFile} not found.");
+							return -1;
+						}
+
+						if (!quite)
+						{
+							await Console.Error.WriteLineAsync($"Executing command file {commandFile}");
+						}
+
 						foreach (var line in await File.ReadAllLinesAsync(commandFile))
 						{
 							await this.RunCommand(line);
@@ -251,7 +262,7 @@ namespace Crosberg.SignalChop
 
 			if (!this.quiteMode)
 			{
-				Console.WriteLine($"Listening on {splitCommand[0]}");
+				Console.WriteLine($"Listening on {splitCommand[0]} with {splitCommand.Length - 1} parameter.");
 			}
 		}
 

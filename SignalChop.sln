@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{28E76617-6
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crosberg.SignalChop.Example", "SignalChop.Example\Crosberg.SignalChop.Example.csproj", "{BFE82A1B-FD40-4B0F-979E-E46F1D838898}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{B3206B9F-37EE-4422-97CA-80909CD9367E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3206B9F-37EE-4422-97CA-80909CD9367E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3206B9F-37EE-4422-97CA-80909CD9367E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFE82A1B-FD40-4B0F-979E-E46F1D838898}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFE82A1B-FD40-4B0F-979E-E46F1D838898}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFE82A1B-FD40-4B0F-979E-E46F1D838898}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFE82A1B-FD40-4B0F-979E-E46F1D838898}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
