@@ -8,8 +8,8 @@ namespace Crosberg.SignalChop.Example.Hubs
 		public async Task SendComplexObject(string echo, MessageParameter message)
 		{
 			// Echo the message back
-			await this.Clients.All.SendAsync("broadcastMessage", echo, message);
-			await this.Clients.All.SendAsync("broadcastEchoOnly", echo);
+			await this.Clients.All.SendAsync("broadcastMessage", echo, "Test");
+			//await this.Clients.All.SendAsync("broadcastEchoOnly", echo);
 		}
 	}
 

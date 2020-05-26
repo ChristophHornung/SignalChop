@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Crosberg.SignalChop": {
+      "commandName": "Project",
+      "commandLineArgs": "--verbose"
+    }
+  }
+}

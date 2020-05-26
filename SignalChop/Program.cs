@@ -110,7 +110,7 @@ namespace Crosberg.SignalChop
 
 		private void ShowGeneralHelp()
 		{
-			Console.WriteLine(
+			Console.Error.WriteLine(
 				"Available Commands: Connect<server>; Listen <method>; Send <method> <parameters>[]; Help <method>; Quit [afterCountMessages]; ");
 		}
 
@@ -238,7 +238,7 @@ namespace Crosberg.SignalChop
 			if (newWaitCount == 0)
 			{
 				this.connection?.DisposeAsync();
-				this.exit = true;
+				Environment.Exit(0);
 			}
 		}
 
@@ -262,7 +262,7 @@ namespace Crosberg.SignalChop
 
 			if (!this.quiteMode)
 			{
-				Console.WriteLine($"Listening on {splitCommand[0]} with {splitCommand.Length - 1} parameter.");
+				Console.Error.WriteLine($"Listening on {splitCommand[0]} with {splitCommand.Length - 1} parameter.");
 			}
 		}
 
@@ -279,7 +279,7 @@ namespace Crosberg.SignalChop
 			Console.WriteLine("}}");
 			if (this.waitCount > 0)
 			{
-				this.Quit(this.waitCount--);
+				this.Quit(--this.waitCount);
 			}
 
 			return Task.CompletedTask;
@@ -302,7 +302,7 @@ namespace Crosberg.SignalChop
 			await this.connection.StartAsync();
 			if (!this.quiteMode)
 			{
-				Console.WriteLine(this.connection.State);
+				Console.Error.WriteLine(this.connection.State);
 			}
 		}
 
@@ -326,7 +326,15 @@ namespace Crosberg.SignalChop
 		{
 			if (!this.quiteMode)
 			{
-				await Console.Error.WriteLineAsync("Connection closed: " + e.Message);
+				if (e != null)
+				{
+					await Console.Error.WriteLineAsync("Connection closed with error: " + e.Message);
+				}
+				else
+				{
+					await Console.Error.WriteLineAsync("Connection closed");
+				}
+				
 			}
 		}
 
