@@ -28,25 +28,25 @@ Connects to the given signalR server.
 Example: Connect https://localhost:50001/chatHub
   
 ### Listen
-Usage: Listen <method> [parameter1] [parameter2]...
+Usage: Listen method [parameter1] [parameter2]...
 
-Listens for SignalR invocations for the given <method>. Received messages will be output on the console in JSON format.
+Listens for SignalR invocations for the given `method`. Received messages will be output on the console in JSON format.
 
 [parameterX] will be used to name the given parameter in the json output. The number of parameters has to match the <method>-definition on the server.
 
 Example: Listen broadcastMessage username chatmessage"
   
 ### StopListen
-Usage: StopListen <method>
+Usage: StopListen method
 
-Stops listening for SingalR invocation messages for <method>.
+Stops listening for SingalR invocation messages for `method`.
 
 Example: StopListen broadcastMessage"
 
 ### Send
-Usage: Send <method> [parameter1] [parameter2] ..."
+Usage: Send method [parameter1] [parameter2] ..."
 
-Sends a SignalR invocation message for <method> to the server."
+Sends a SignalR invocation message for `method` to the server."
 
 [parameterX] defines the parameters of the invocation. The number of parameters has to match the <method>s definition on the server.
 
