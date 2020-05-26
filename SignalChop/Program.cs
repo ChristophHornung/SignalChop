@@ -66,7 +66,7 @@ namespace Crosberg.SignalChop
 			this.waitCount = exitAfterCount;
 			this.quiteMode = quite;
 			this.verboseMode = verbose;
-			if (!quite && !string.IsNullOrEmpty(commandFile))
+			if (!quite && string.IsNullOrEmpty(commandFile))
 			{
 				this.ShowGeneralHelp();
 			}
