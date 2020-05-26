@@ -268,12 +268,28 @@ namespace Crosberg.SignalChop
 
 		private Task OnReceived(string[] splitCommand, object[] data)
 		{
-			Console.WriteLine($"{{ \"message\":\"{splitCommand[0]}\"");
+			Console.WriteLine($"{{ \"message\":\"{splitCommand[0]}\",");
 			Console.WriteLine("\"data\":{");
 			for (var i = 0; i < splitCommand[1..].Length; i++)
 			{
 				string param = splitCommand[1..][i];
-				Console.WriteLine($"\"{param}\" : {data[i]}");
+				if (data[i] is JsonElement s && s.ValueKind == JsonValueKind.String)
+				{
+					Console.Write($"\"{param}\" : \"{s}\"");
+				}
+				else
+				{
+					Console.Write($"\"{param}\" : {data[i]}");
+				}
+
+				if (i == splitCommand[1..].Length - 1)
+				{
+					Console.WriteLine();
+				}
+				else
+				{
+					Console.WriteLine(",");
+				}
 			}
 
 			Console.WriteLine("}}");
@@ -362,7 +378,7 @@ namespace Crosberg.SignalChop
 				}
 				else
 				{
-					result[i] = arg[i];
+					result[i] = arg;
 				}
 			}
 
