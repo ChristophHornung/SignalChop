@@ -6,6 +6,7 @@ Usage:
   SignalChop [options]
 
 Options:
+
  | Option | Description |
  | --- | --- |
  | --command-file <command-file>           | An optional command file that will be executed line by line. |
