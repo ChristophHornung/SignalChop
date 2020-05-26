@@ -17,7 +17,6 @@ namespace Crosberg.SignalChop
 	internal class Program
 	{
 		private HubConnection? connection;
-		private bool exit;
 		private int waitCount;
 		private bool quiteMode;
 		private readonly Dictionary<string, IDisposable> listeningEntries = new Dictionary<string, IDisposable>();
@@ -93,12 +92,10 @@ namespace Crosberg.SignalChop
 						}
 					}
 
-					while (!this.exit)
+					while (true)
 					{
 						await this.RunCommand(Console.ReadLine());
 					}
-
-					return 0;
 				}
 				catch (Exception e)
 				{

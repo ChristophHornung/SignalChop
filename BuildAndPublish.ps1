@@ -1,5 +1,3 @@
-dotnet restore
-dotnet build
 Remove-Item Release -Recurse -Force -EA SilentlyContinue
 dotnet publish .\SignalChop\Crosberg.SignalChop.csproj -r win-x64 -c Release -p:PublishSingleFile=true -p:PublishTrimmed=true -o Release/win-x64
 dotnet publish .\SignalChop\Crosberg.SignalChop.csproj -r win-arm -c Release -p:PublishSingleFile=true -p:PublishTrimmed=true -o Release/win-arm
