@@ -1,6 +1,6 @@
 # SignalChop
 
-![Latest](https://github.com/ChristophHornung/SignalChop/workflows/.NET%20Core/badge.svg)
+![CI Build](https://github.com/ChristophHornung/SignalChop/workflows/CI%20Build/badge.svg)
 
 SignalChop is a simple command line sender/receiver for SignalR messages. It can be used to call and receive from SignalR endpoints.
 
