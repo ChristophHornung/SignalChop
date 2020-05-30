@@ -7,6 +7,10 @@ SignalChop is a simple command line sender/receiver for SignalR messages. It can
 ## Example
 Checkout the SignalChop.Example folder for a full send/receive example.
 
+## Installation
+
+Grab the latest version [here](https://github.com/ChristophHornung/SignalChop/releases).
+
 ## Usage
 
   SignalChop [options]
