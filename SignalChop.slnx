@@ -1,0 +1,15 @@
+<Solution>
+  <Folder Name="/Docs/">
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/SolutionItems/">
+    <File Path=".editorconfig" />
+    <File Path=".github/workflows/dotnet-core.yml" />
+    <File Path=".gitignore" />
+    <File Path="BuildAndPublish.ps1" />
+    <File Path="LICENSE" />
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="SignalChop.Example/Crosberg.SignalChop.Example.csproj" />
+  <Project Path="SignalChop/Crosberg.SignalChop.csproj" />
+</Solution>
