@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -16,6 +17,50 @@ internal class SignalChopper
 	public int WaitCount { get; set; }
 	public bool VerboseMode { get; set; }
 	public bool QuiteMode { get; set; }
+
+	private static object? ParseJsonScalar(string inner)
+	{
+		// Try strict JSON first using JsonElement so numbers/bools/null/"strings" work.
+		try
+		{
+			JsonElement el = JsonSerializer.Deserialize<JsonElement>(inner);
+			return el.ValueKind switch
+			{
+				JsonValueKind.True => true,
+				JsonValueKind.False => false,
+				JsonValueKind.Null => null,
+				JsonValueKind.String => el.GetString(),
+				JsonValueKind.Number => el.TryGetInt64(out long l) ? l : el.GetDouble(),
+				_ => inner
+			};
+		}
+		catch
+		{
+			// Tolerate unquoted strings like {hello} by treating them as plain text.
+			// Also tolerate culture-invariant numbers.
+			if (bool.TryParse(inner, out bool b))
+			{
+				return b;
+			}
+
+			if (long.TryParse(inner, NumberStyles.Integer, CultureInfo.InvariantCulture, out long l))
+			{
+				return l;
+			}
+
+			if (double.TryParse(inner, NumberStyles.Float, CultureInfo.InvariantCulture, out double d))
+			{
+				return d;
+			}
+
+			if (string.Equals(inner, "null", StringComparison.OrdinalIgnoreCase))
+			{
+				return null;
+			}
+
+			return inner;
+		}
+	}
 
 	[MemberNotNullWhen(true, nameof(this.connection))]
 	public bool CheckConnection()
@@ -167,6 +212,7 @@ internal class SignalChopper
 	private object[] ConvertSendArguments(string[] args)
 	{
 		object[] result = new object[args.Length];
+
 		for (int i = 0; i < args.Length; i++)
 		{
 			string arg = args[i].Trim('\'');
@@ -177,19 +223,33 @@ internal class SignalChopper
 					Converters = { new DynamicJsonConverter() }
 				})!;
 			}
-			else
+			else if (arg.Trim().StartsWith('"'))
 			{
 				result[i] = arg;
+			}
+			else
+			{
+				// Try to convert to a json primitive
+				object? scalar = ParseJsonScalar(arg);
+				if (scalar != null)
+				{
+					result[i] = scalar;
+				}
+				else
+				{
+					result[i] = arg;
+				}
 			}
 		}
 
 		return result;
 	}
 
-	private Task OnReceived(string[] splitCommand, object[] data)
+	private Task OnReceived(string[] splitCommand, object?[] data)
 	{
 		Console.WriteLine($"{{ \"message\":\"{splitCommand[0]}\",");
 		Console.WriteLine("\"data\":{");
+
 		for (int i = 0; i < splitCommand[1..].Length; i++)
 		{
 			string param = splitCommand[1..][i];
